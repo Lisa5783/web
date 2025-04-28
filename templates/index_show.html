@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}
+{{user.login}}
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1>{{user.login}}</h1>
+    <table class="table table-striped table-bordered align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Логин</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Роль</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.login }}</td>
+                <td>
+                    {{ user.lastname or '' }} {{ user.firstname }}{% if user.middlename %} {{ user.middlename }}{% endif %}
+                </td>
+                <td>
+                    {{ user.role.name if user.role else 'Нет роли' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

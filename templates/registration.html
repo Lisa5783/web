@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 500px;">
+    <h1 class="mb-4 text-center">Регистрация</h1>
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <!-- Логин -->
+        <div class="mb-3">
+            <label for="login" class="form-label">Логин</label>
+            <input type="text" name="login" id="login" 
+                   class="form-control {% if errors.login %}is-invalid{% endif %}" 
+                   placeholder="Введите логин" 
+                   value="{{ form_data.login if form_data }}" 
+                   required>
+            {% if errors.login %}
+            <div class="invalid-feedback">{{ errors.login }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Пароль -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" name="password" id="password" 
+                   class="form-control {% if errors.password %}is-invalid{% endif %}" 
+                   placeholder="Введите пароль" 
+                   required>
+            {% if errors.password %}
+            <div class="invalid-feedback">{{ errors.password }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Имя -->
+        <div class="mb-3">
+            <label for="firstname" class="form-label">Имя</label>
+            <input type="text" name="firstname" id="firstname" 
+                   class="form-control {% if errors.firstname %}is-invalid{% endif %}" 
+                   placeholder="Введите имя" 
+                   value="{{ form_data.firstname if form_data }}" 
+                   required>
+            {% if errors.firstname %}
+            <div class="invalid-feedback">{{ errors.firstname }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Остальные поля -->
+        <div class="mb-3">
+            <label for="lastname" class="form-label">Фамилия</label>
+            <input type="text" name="lastname" id="lastname" 
+                   class="form-control" 
+                   placeholder="Введите фамилию (необязательно)" 
+                   value="{{ form_data.lastname if form_data }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="middlename" class="form-label">Отчество</label>
+            <input type="text" name="middlename" id="middlename" 
+                   class="form-control" 
+                   placeholder="Введите отчество (необязательно)" 
+                   value="{{ form_data.middlename if form_data }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="role" class="form-label">Роль</label>
+            <select name="role" id="role" class="form-control">
+                <option value="">Без роли</option>
+                {% for role in roles %}
+                    <option value="{{ role.id }}" 
+                            {% if form_data.role|string == role.id|string %}selected{% endif %}>
+                        {{ role.name }}
+                    </option>
+                {% endfor %}
+            </select>            
+        </div>
+
+        {% if errors.db %}
+        <div class="alert alert-danger">{{ errors.db }}</div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-success w-100">Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}
